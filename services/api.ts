@@ -1,11 +1,11 @@
-import type { MovieName, RecommendResponse } from "@/types/movies";
+import type { MovieName, RecommendResponse, RecommendationItem } from "@/types/movies";
 
 const BASE_URL = "/api";
 
-function normalizeRecommendationItems(input: unknown) {
+function normalizeRecommendationItems(input: unknown): RecommendationItem[] {
   if (!Array.isArray(input)) return [];
 
-  return input
+  const mapped = input
     .map((raw) => {
       if (typeof raw === "string") {
         return { title: raw, score: 0, posterUrl: undefined, id: raw };
@@ -49,9 +49,9 @@ function normalizeRecommendationItems(input: unknown) {
 
       return null;
     })
-    .filter((v): v is { id?: number | string; title: string; score: number; posterUrl?: string } =>
-      Boolean(v)
-    );
+    .filter((v): v is RecommendationItem => Boolean(v));
+
+  return mapped;
 }
 
 export async function fetchMovieList(): Promise<MovieName[]> {
