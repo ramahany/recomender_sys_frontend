@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-background text-white antialiased;
+  background: radial-gradient(circle at top, #1a0f2e, #050509);
+}
+
+* {
+  @apply selection:bg-accent selection:text-white;
+}
+
