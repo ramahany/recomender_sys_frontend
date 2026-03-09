@@ -48,10 +48,9 @@ function normalizeRecommendationItems(input: unknown): RecommendationItem[] {
       }
 
       return null;
-    })
-    .filter((v): v is RecommendationItem => Boolean(v));
+    });
 
-  return mapped;
+  return mapped.filter(Boolean) as RecommendationItem[];
 }
 
 export async function fetchMovieList(): Promise<MovieName[]> {
