@@ -1,12 +1,12 @@
 import type { MovieName, RecommendResponse, RecommendationItem } from "@/types/movies";
 
-const BASE_URL = "/api";
+const BASE_URL = "https://recsys.up.railway.app/api/v1";
 
 function normalizeRecommendationItems(input: unknown): RecommendationItem[] {
   if (!Array.isArray(input)) return [];
 
-  const mapped = input
-    .map((raw) => {
+  const mapped: (RecommendationItem | null)[] = input.map(
+    (raw): RecommendationItem | null => {
       if (typeof raw === "string") {
         return { title: raw, score: 0, posterUrl: undefined, id: raw };
       }
@@ -48,9 +48,10 @@ function normalizeRecommendationItems(input: unknown): RecommendationItem[] {
       }
 
       return null;
-    });
+    }
+  );
 
-  return mapped.filter(Boolean) as RecommendationItem[];
+  return mapped.filter((v): v is RecommendationItem => v !== null);
 }
 
 export async function fetchMovieList(): Promise<MovieName[]> {
